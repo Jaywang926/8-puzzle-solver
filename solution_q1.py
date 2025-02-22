@@ -31,7 +31,7 @@ def get_all_children(node):
         new_state = list(node.value)
         new_state[index], new_state[index - 1] = new_state[index - 1], new_state[index] 
         new_node = Node(new_state)
-        new_node.path = node.path + new_state[index] + 'R'
+        new_node.path = node.path + new_state[index] + 'R,'
         new_node.num = node.value[index - 1]
         children.append(new_node)
 
@@ -40,7 +40,7 @@ def get_all_children(node):
         new_state = list(node.value)
         new_state[index], new_state[index + 1] = new_state[index + 1], new_state[index]
         new_node = Node(new_state)
-        new_node.path = node.path + new_state[index] + 'L'
+        new_node.path = node.path + new_state[index] + 'L,'
         new_node.num = node.value[index + 1]
         children.append(new_node)
     
@@ -49,7 +49,7 @@ def get_all_children(node):
         new_state = list(node.value)
         new_state[index], new_state[index - 3] = new_state[index - 3], new_state[index] 
         new_node = Node(new_state)
-        new_node.path = node.path + new_state[index] + 'D'
+        new_node.path = node.path + new_state[index] + 'D,'
         new_node.num = node.value[index - 3]
         children.append(new_node) 
 
@@ -58,7 +58,7 @@ def get_all_children(node):
         new_state = list(node.value)
         new_state[index], new_state[index + 3] = new_state[index + 3], new_state[index] 
         new_node = Node(new_state)
-        new_node.path = node.path + new_state[index] + 'U'
+        new_node.path = node.path + new_state[index] + 'U,'
         new_node.num = node.value[index + 3]
         children.append(new_node)
 
@@ -104,7 +104,7 @@ def DFS_solve(node, goal, vis, depth, exps):
 
     if node.value == goal: 
         #print('DFS node expansions:', exps)
-        return node.path
+        return node.path[:-1]
     
     if node is None or depth == 100:
         return
@@ -144,7 +144,7 @@ def BFS_solve(start, goal):
 
         if curr_node.value == goal:
             #print('BFS node expansions:', node_exps)
-            return curr_node.path
+            return curr_node.path[:-1]
         
         for child in get_all_children(curr_node):
             if child.value not in visited:
@@ -173,7 +173,7 @@ def UCS_solve(start, goal):
 
         if curr_node.value == goal:
             #print('UCS node expansions:', node_exps)
-            return curr_node.path
+            return curr_node.path[:-1]
         
         children = get_all_children(curr_node)
         for child in children:
@@ -205,7 +205,7 @@ def A_manhattan_solve(start, goal):
 
         if curr_node.value == goal:
             #print('A* with manhattan node expansions:', node_exps)
-            return curr_node.path
+            return curr_node.path[:-1]
         
         children = get_all_children(curr_node)
         for child in children:
@@ -238,7 +238,7 @@ def A_eucl_solve(start, goal):
 
         if curr_node.value == goal:
             #print('A* with euclidean node expansions:', node_exps)
-            return curr_node.path
+            return curr_node.path[:-1]
         
         children = get_all_children(curr_node)
         for child in children:

@@ -98,34 +98,28 @@ def calc_eucl_dist(num, node, goal):
 
     return (horiz_dist**2 + vert_dist**2)**0.5
    
+def DFS_solve(start, goal):
+    stack = deque()
+    stack.append(start)
+    visited = set()
+    node_exps = 0
 
-def DFS_solve(node, goal, vis, depth, exps):
-    vis.add(node.value) 
+    while stack:
+        curr_node = stack.pop()
+        visited.add(curr_node.value)
 
-    if node.value == goal: 
-        #print('DFS node expansions:', exps)
-        return node.path[:-1]
-    
-    if node is None or depth == 100:
-        return
-    
-    for child in get_all_children(node): 
-
-        if child.value not in vis: 
-            vis.add(child.value)
-            exps += 1
-            result = DFS_solve(child, goal, vis, depth + 1, exps)
-
-            #check if a path was found
-            if result:
-                return result 
+        if curr_node.value == goal:
+            print('BFS node expansions:', node_exps)
+            return curr_node.path[:-1]
+        
+        for child in get_all_children(curr_node):
+            if child.value not in visited:
+                node_exps += 1
+                stack.append(child)
     return
 
-node_exps = 0
 start = Node(start_state)
-visited = set()
-depth = 0
-solution = DFS_solve(start, goal_state, visited, depth, node_exps)
+solution = DFS_solve(start, goal_state)
 if solution:
     print('The solution to Q1.1a is:\n' + solution)
 

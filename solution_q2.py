@@ -113,7 +113,7 @@ def DFS_solve(start, goal):
         visited.add(curr_node.value)
 
         if curr_node.value == goal:
-            print('BFS node expansions:', node_exps)
+            #print('DFS node expansions:', node_exps)
             return curr_node.path[:-1]
         
         for child in get_all_children(curr_node):
